@@ -1,11 +1,10 @@
 import unittest
 
-from main import get_combinations
+from itertools_first_attempt import get_combinations
 
 
-class MyTestCase(unittest.TestCase):
-    @staticmethod
-    def test_works_for_6p():
+class TestFirstAttempt(unittest.TestCase):
+    def test_works_for_6p(self):
         result = get_combinations(6, [1, 2, 5])
 
         result_list = list(result)
@@ -15,7 +14,7 @@ class MyTestCase(unittest.TestCase):
         assert [1, 1, 2, 2] in result_list
         assert [2, 2, 2] in result_list
         assert [1, 5] in result_list
-        assert len(result_list) == 5
+        self.assertEqual(len(result_list), 5)
 
 
 if __name__ == '__main__':
