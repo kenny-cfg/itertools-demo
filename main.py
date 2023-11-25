@@ -12,11 +12,25 @@ def get_combinations(total: int, coins: list[int]) -> list[list[int]]:
         for coin in coins
         for repeated_coin in get_possible_list(total, coin)
     ]
-    combinations = set([
-        x
+    combinations = (
+        combination
         for size in range(len(coins_to_choose_from))
-        for x in set(itertools.combinations(coins_to_choose_from, size))
-        if sum(x) == total
-    ])
-    return [list(x) for x in combinations]
+        for combination in set(itertools.combinations(coins_to_choose_from, size))
+    )
+    max_length = 0
+    combinations_considered = 0
+    for combination in combinations:
+        if len(combination) > max_length:
+            max_length = len(combination)
+            print(f'Combination of size {max_length}')
+        combinations_considered += 1
+        if combinations_considered > 150:
+            print(f'{combinations_considered} combinations considered')
+        if sum(combination) != total:
+            continue
+        yield list(combination)
 
+
+if __name__ == '__main__':
+    for x in get_combinations(247, [1, 2, 5, 10, 20, 50, 100, 200]):
+        print(x)
