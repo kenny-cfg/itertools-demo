@@ -1,15 +1,22 @@
 # Print out all the ways of making £2.47 using UK coins
-from typing import Iterator
+import itertools
 
 
-def get_combinations(total: int, coins: list[int]) -> Iterator[list[int]]:
-    yield [1, 1, 1, 1, 1, 1]
-    yield [1, 1, 1, 1, 2]
-    yield [1, 1, 2, 2]
-    yield [2, 2, 2]
-    yield [1, 5]
+def get_possible_list(total: int, coin: int) -> list[int]:
+    return [coin] * (total // coin)
 
 
-if __name__ == '__main__':
-    for combination in get_combinations(247, [1, 2, 5, 10, 20, 50, 100, 200]):
-        print(combination)
+def get_combinations(total: int, coins: list[int]) -> list[list[int]]:
+    coins_to_choose_from = [
+        repeated_coin
+        for coin in coins
+        for repeated_coin in get_possible_list(total, coin)
+    ]
+    combinations = set([
+        x
+        for size in range(len(coins_to_choose_from))
+        for x in set(itertools.combinations(coins_to_choose_from, size))
+        if sum(x) == total
+    ])
+    return [list(x) for x in combinations]
+

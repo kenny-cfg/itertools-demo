@@ -9,6 +9,7 @@ class MyTestCase(unittest.TestCase):
         result = get_combinations(6, [1, 2, 5])
 
         result_list = list(result)
+        print(result_list)
         assert [1, 1, 1, 1, 1, 1] in result_list
         assert [1, 1, 1, 1, 2] in result_list
         assert [1, 1, 2, 2] in result_list
